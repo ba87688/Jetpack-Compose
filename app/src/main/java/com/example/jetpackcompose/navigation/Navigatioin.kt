@@ -13,7 +13,8 @@ fun Navigatioin(
 ){
     NavHost(
         startDestination = Screen.Home.route,
-        navController =  navHostController){
+        navController =  navHostController
+    ){
 
 
         composable(Screen.Home.route){
