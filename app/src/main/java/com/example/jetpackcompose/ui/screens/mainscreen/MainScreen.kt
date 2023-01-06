@@ -3,9 +3,13 @@ package com.example.jetpackcompose.ui.screens.mainscreen
 import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -13,6 +17,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,15 +37,10 @@ fun MainScreen( navController: NavHostController){
 
 
     Column() {
+            ImageRow()
+            Testsa()
 
-        Text(text = "Rocky")
 
-        Button(onClick = {
-            navController.navigate(route = Screen.ElectionData.route)
-        }) {
-            Text(text = "Go to next Screen")
-
-        }
 
     }
 
@@ -51,14 +52,17 @@ fun ImageRow(
 ) {
     Surface(
         shape = MaterialTheme.shapes.small,
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.width(193.dp)
+            modifier = Modifier
+                .width(193.dp)
+                .background(Color.Yellow)
+                .fillMaxWidth()
         ) {
 
-            Image(painterResource(id =  R.drawable.ic_launcher_foreground2),
+            Image(painterResource(id =  R.drawable.pizza),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = modifier.size(56.dp)
@@ -83,7 +87,9 @@ fun GridHolder(
         ,
         contentPadding = PaddingValues(horizontal = 16.dp)
         ,
-        modifier= modifier.height(120.dp),
+        modifier= modifier
+            .height(120.dp)
+            .background(Color.Transparent),
         rows = GridCells.Fixed(2) ){
         items(40){ items->
             ImageRow()
@@ -92,6 +98,46 @@ fun GridHolder(
 
 }
 
+
+@Composable
+fun ImageColumn(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.background(Color.Yellow)
+
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.pizza),
+            contentDescription = "greece default",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(88.dp)
+                .clip(CircleShape)
+        )
+        Text(
+            text = "Evan maroge",
+            style = MaterialTheme.typography.h5,
+            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp)
+        )
+    }
+}
+//grid holder
+@Composable
+fun StraightHolder(
+modifier: Modifier = Modifier
+){
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding= PaddingValues(horizontal = 16.dp),
+        modifier = modifier ){
+        items (30){ item->
+            ImageColumn()
+
+        }
+    }
+}
 
 @Composable
 fun HomeSection(
@@ -116,21 +162,33 @@ fun HomeSection(
 @Composable
 fun Testsa(
 ){
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(Color.Transparent)) {
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
 
         Column(modifier = Modifier.fillMaxHeight(.5f)) {
             HomeSection(R.string.app_name) {
+                StraightHolder()
+                Spacer(modifier = Modifier.padding(vertical = 16.dp))
                 GridHolder()
             }
         }
 
-//        Spacer(modifier = Modifier.padding(vertical = 16.dp))
+        Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
-        Column(modifier = Modifier.fillMaxHeight(.5f)) {
-            HomeSection(R.string.app_name) {
-                GridHolder()
+        Column(
+
+            modifier = Modifier.fillMaxHeight(.5f)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+
+        ) {
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Button 1")
+            }
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Button 2")
             }
         }
 
